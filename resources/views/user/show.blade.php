@@ -1,6 +1,6 @@
 
 
-   @extends('admin.master')
+   @extends('master')
    @section('main_content')
 
 <table class="table table-bordered table-hover">

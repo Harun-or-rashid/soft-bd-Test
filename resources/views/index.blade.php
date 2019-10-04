@@ -32,10 +32,10 @@
 </head>
 <body class="skin-black">
 <!-- header logo: style can be found in header.less -->
-@include('admin.partial.header')
+@include('partial.header')
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <!-- Left side column. contains the logo and sidebar -->
-@include('admin.partial.sidebar')
+@include('partial.sidebar')
 
 <!-- Right side column. Contains the navbar and content of the page -->
    <!-- /.right-side -->
@@ -44,6 +44,6 @@
 <!-- add new calendar event modal -->
 
 
-@include('admin.partial.footer')
+@include('partial.footer')
 </body>
 </html>
