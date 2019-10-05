@@ -12,4 +12,10 @@ class Department extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function designations()
+    {
+        return $this->hasMany(Designation::class);
+}
+
 }

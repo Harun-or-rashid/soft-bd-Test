@@ -17,6 +17,9 @@
 <body>
 
 <div class="container pt-5">
+
+    @include('partial.message')
+
     <form class="form-box" action="{{route('department.store')}}" method="post" enctype="multipart/form-data">
         <h3 class="form-box success">Create New Department</h3><br>
         @csrf
@@ -59,25 +62,20 @@
 </div>
 
 
+
 @endsection
 
 
 @section('custom_script')
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <script>
+
         $(document).ready(function () {
-
-
             $("#company").change(function () {
-
                 let route = "{{ route('department.get-branch') }}";
                 let _token = $("#_token").val();
                 let company_id = this.value;
-
-
                 $.ajax({
                     type: "POST",
                     url: route,

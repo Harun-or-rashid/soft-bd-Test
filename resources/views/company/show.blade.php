@@ -1,28 +1,47 @@
+@extends('master')
+@section('main_content')
 
+    @include('partial.message')
 
-   @extends('master')
-   @section('main_content')
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table table-bordered table-hover">
 
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Mobile Number</th>
-        <th>Address</th>
-        <th>Status</th>
-    </tr>
-    <tr>
-        <td>{{$company->name}}</td>
-        <td>{{$company->email}}</td>
-        <td>{{$company->phone}}</td>
-        <td>{{$company->address}}</td>
-        @if($company->status==1)
-            <td class="text-success">Active</td>
-        @else
-            <td class="text-danger">Inactive</td>
-        @endif
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td>{{ $company->name }}</td>
+            </tr>
 
-    </tr>
-</table>
-       @endsection
+            <tr>
+                <td>Email</td>
+                <td>:</td>
+                <td>{{ $company->email }}</td>
+            </tr>
+
+            <tr>
+                <td>Mobile Number</td>
+                <td>:</td>
+                <td>{{ $company->phone }}</td>
+            </tr>
+
+            <tr>
+                <td>Address</td>
+                <td>:</td>
+                <td>{{ $company->address }}</td>
+            </tr>
+
+            <tr>
+                <td>Status</td>
+                <td>:</td>
+                <td>
+                    @if($company->status == 1)
+                        <span class="text-success">Active</span>
+                    @else
+                        <span class="text-danger">Inactive</span>
+                    @endif
+                </td>
+            </tr>
+        </table>
+        <div class="col-md-6 col-md-offset-3">
+@endsection
 

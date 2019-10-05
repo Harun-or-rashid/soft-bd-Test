@@ -59,8 +59,8 @@
 <!-- add new calendar event modal -->
 
 
+@yield('custom_script')
 @include('partial.footer')
 
-@yield('custom_script')
 </body>
 </html>

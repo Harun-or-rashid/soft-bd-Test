@@ -5,6 +5,10 @@
         <div class="text-center">
             <h2>Department Details</h2>
         </div>
+
+
+        @include('partial.message')
+
         <div class="col-md-6 col-md-offset-3">
             <table class="table table-bordered table-hover">
 

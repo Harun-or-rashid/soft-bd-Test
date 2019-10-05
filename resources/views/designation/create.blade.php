@@ -20,16 +20,16 @@
 
     @include('partial.message')
 
-    <form class="form-box" action="{{route('department.update', $department->id)}}" method="post"
-          enctype="multipart/form-data">
-        <h3 class="form-box success">Update Department</h3><br>
+    <form class="form-box" action="{{route('designation.store')}}" method="post" enctype="multipart/form-data">
+        <h3 class="form-box success">Create New Designation</h3><br>
         @csrf
+
         <div class="form-group ">
             <label for="company">Company</label>
             <select name="company" id="company" class="form-control">
                 <option value="">--select--</option>
                 @foreach($companies as $company)
-                    <option value="{{ $company->id }}" {{ ($department->branch->company_id == $company->id)?'selected':'' }}>{{ $company->name }}</option>
+                    <option value="{{ $company->id }}">{{ $company->name }}</option>
                 @endforeach
             </select>
             {{$errors->first('company')}}
@@ -38,52 +38,43 @@
         <div class="form-group ">
             <label for="branch">Branch</label>
             <select name="branch" id="branch" class="form-control">
-                @foreach($branches as $branch)
-                    <option value="{{ $branch->id }}" {{ ($department->branch_id==$branch->id)?'selected':'' }}>{{ $branch->name }}</option>
-                @endforeach
+                <option value="">--Select Company First--</option>
             </select>
             {{$errors->first('branch')}}
         </div>
 
-
         <div class="form-group ">
-            <label for="name">Name</label>
-            <input type="text" value="{{ $department->name }}" class="form-control" id="name" placeholder="Enter Branch Title" name="name">
-            {{$errors->first('name')}}
+            <label for="department">Department</label>
+            <select name="department" id="department" class="form-control">
+                <option value="">--Select branch First--</option>
+            </select>
+            {{$errors->first('department')}}
         </div>
 
 
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Status</label>
-            <input type="radio" id="status_active" value="1" {{($department->status == 1)?'checked':''}} name="status">
-            <label for="status_active">Active</label>
 
-            <input type="radio" id="status_inactive" value="0"
-                   {{($department->status == 0)?'checked':''}}  name="status">
-            <label for="status_inactive">Inactive</label>
-            {{$errors->first('status')}}
+        <div class="form-group ">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Enter Branch Title" name="title">
+            {{$errors->first('title')}}
         </div>
 
 
         <br>
-
-
         <div class="form-group">
-            <input type="submit" name="submit" class="btn btn-primary" value="Update">
+            <input type="submit" name="submit" class="btn btn-primary" value="Submit">
         </div>
 
 
     </form>
-
-
     <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 </div>
+
 
 @endsection
 
 
 @section('custom_script')
-
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -109,6 +100,24 @@
                 });
 
 
+
+            });
+
+            $("#branch").change(function () {
+
+                let route = "{{ route('designation.get-department') }}";
+                let _token = $("#_token").val();
+                let branch_id = this.value;
+
+
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: {branch_id: branch_id, _token: _token},
+                    success: function (result) {
+                        $("#department").html(result);
+                    }
+                });
             });
 
 

@@ -16,6 +16,9 @@
 <body>
 
 <div class="container pt-5">
+
+    @include('partial.message')
+
     <form class="form-box" action="{{route('branch.store')}}" method="post" enctype="multipart/form-data">
         <h3 class="form-box success">Create New Branch</h3><br>
         @csrf

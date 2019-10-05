@@ -54,6 +54,10 @@ class DepartmentController extends Controller
             ];
 
             Department::create($data);
+
+            session()->flash('type', 'success');
+            session()->flash('message', 'Company Created Successfully');
+
             return redirect()->back();
 
         } catch (\Exception $exception) {
@@ -92,7 +96,7 @@ class DepartmentController extends Controller
         if (!empty($department)) {
 
             $companies = Company::all();
-            $branches = Branch::where('company_id', $department->branch->company_id)->get();
+            $branches = Branch::all();
             return view('department.edit', compact('department', 'companies', 'branches'));
         }
 
@@ -150,7 +154,9 @@ class DepartmentController extends Controller
 
         if (!empty($department)) {
 
-            $department->delete();
+            $department->status = 0;
+
+            $department->save();
 
             session()->flash('type', 'success');
             session()->flash('message', 'Department Deleted Successfully');

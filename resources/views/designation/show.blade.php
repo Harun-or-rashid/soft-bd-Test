@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="text-center">
-            <h2>Branch Details</h2>
+            <h2>Department Details</h2>
         </div>
 
         @include('partial.message')
@@ -14,26 +14,26 @@
                 <tr>
                     <td>Name</td>
                     <td>:</td>
-                    <td>{{ $branch->name }}</td>
+                    <td>{{ $department->name }}</td>
+                </tr>
+
+                <tr>
+                    <td>Branch</td>
+                    <td>:</td>
+                    <td>{{ $department->branch->name }}</td>
                 </tr>
 
                 <tr>
                     <td>Company</td>
                     <td>:</td>
-                    <td>{{ $branch->company->name }}</td>
-                </tr>
-
-                <tr>
-                    <td>Location</td>
-                    <td>:</td>
-                    <td>{{ $branch->location }}</td>
+                    <td>{{ $department->branch->company->name }}</td>
                 </tr>
 
                 <tr>
                     <td>Status</td>
                     <td>:</td>
                     <td>
-                        @if($branch->status == 1)
+                        @if($department->status == 1)
                             <span class="text-success">Active</span>
                         @else
                             <span class="text-danger">Inactive</span>

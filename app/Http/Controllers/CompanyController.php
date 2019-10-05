@@ -55,6 +55,8 @@ class CompanyController extends Controller
         ];
 
         Company::create($data);
+        session()->flash('type', 'success');
+        session()->flash('message', 'Company Created Successfully');
         return redirect()->back();
 
     }
@@ -144,7 +146,9 @@ class CompanyController extends Controller
 
         if (!empty($company)) {
 
-            $company->delete();
+            $company->status = 0;
+
+            $company->save();
 
             session()->flash('type', 'success');
             session()->flash('message', 'Company Deleted Successfully');

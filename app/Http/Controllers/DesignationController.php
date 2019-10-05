@@ -3,21 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Branch;
-use App\Company;
+use App\Department;
+use App\Designation;
 use Illuminate\Http\Request;
+use App\Company;
 
-class BranchController extends Controller
+class DesignationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $branches=Branch::all();
+        $designation=Designation::all();
 
-        return view('branch.list',compact('branches'));
+        return view('designation.list',compact('designation'));
     }
 
     /**
@@ -28,7 +25,7 @@ class BranchController extends Controller
     public function create()
     {
         $companies=Company::all();
-        return view('branch.create')->with('companies', $companies);
+        return view('designation.create')->with('companies', $companies);
     }
 
     /**
@@ -41,23 +38,22 @@ class BranchController extends Controller
     {
 
         $this->validate($request,[
-            'company'=>'required|exists:companies,id',
-            'name'=>'required',
-            'location'=>'required',
+            'department'=>'required|exists:departments,id',
+            'title'=>'required',
         ]);
 
         try {
             $data = [
-                'company_id' => $request->company,
-                'name' => $request->name,
-                'location' => $request->location,
+                'department_id' => $request->department,
+                'title' => $request->title,
                 'status' => 1,
             ];
 
-            Branch::create($data);
+            Designation::create($data);
 
             session()->flash('type', 'success');
-            session()->flash('message', 'Branch Created Successfully');
+            session()->flash('message', 'Company Created Successfully');
+
             return redirect()->back();
 
         } catch (\Exception $exception) {
@@ -76,10 +72,10 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($branch)
+    public function show($designation)
     {
-        $data=Branch::find($branch);
-        return view('branch.show')->with('branch',$data);
+        $data=Designation::find($designation);
+        return view('designation.show')->with('designation',$data);
 
     }
 
@@ -91,16 +87,18 @@ class BranchController extends Controller
      */
     public function edit($id)
     {
-        $branch = Branch::find($id);
+        $designation = Designation::find($id);
 
-        if (!empty($branch)) {
+        if (!empty($designation)) {
 
-            $companies = Company::all();
-            return view('branch.edit', compact('branch', 'companies'));
+          $companies = Company::all();
+            $branches = Branch::all();
+            $departments=Department::all();
+            return view('designation.edit', compact('designation', 'companies', 'branches','departments'));
         }
 
         session()->flash('type', 'danger');
-        session()->flash('message', 'Invalid Company');
+        session()->flash('message', 'Invalid Department');
         return redirect()->back();
     }
 
@@ -114,30 +112,28 @@ class BranchController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'company'=>'required|exists:companies,id',
-            'name'=>'required',
-            'location'=>'required',
+            'department'=>'required|exists:departments,id',
+            'title'=>'required',
         ]);
 
-        $branch = Branch::find($id);
+        $designation = Designation::find($id);
 
-        if (!empty($branch)) {
+        if (!empty($designation)) {
 
-            $branch->company_id = $request->company;
-            $branch->name = $request->name;
-            $branch->location = $request->location;
-            $branch->status = $request->status;
+            $designation->department_id = $request->department;
+            $designation->title = $request->title;
+            $designation->status = $request->status;
 
-            $branch->save();
+            $designation->save();
 
             session()->flash('type', 'success');
-            session()->flash('message', 'Branch Update Successfully');
+            session()->flash('message', 'Designation Update Successfully');
             return redirect()->back();
 
         } else {
 
             session()->flash('type', 'danger');
-            session()->flash('message', 'Invalid Branch');
+            session()->flash('message', 'Invalid Designation');
             return redirect()->back();
         }
 
@@ -151,21 +147,33 @@ class BranchController extends Controller
      */
     public function destroy($id)
     {
-        $branch = Branch::find($id);
+        $designation = Designation::find($id);
 
-        if (!empty($branch)) {
+        if (!empty($designation)) {
 
-            $branch->status = 0;
-            $branch->save();
+            $designation->status = 0;
+
+            $designation->save();
 
             session()->flash('type', 'success');
-            session()->flash('message', 'Branch Deleted Successfully');
+            session()->flash('message', 'Designation Deleted Successfully');
             return redirect()->back();
         }
 
         session()->flash('type', 'danger');
-        session()->flash('message', 'Invalid Branch');
+        session()->flash('message', 'Invalid Designation');
         return redirect()->back();
 
     }
+
+    public function getDepartment(Request $request)
+    {
+
+        $branch_id = $request->branch_id;
+        $departments = Department::where('branch_id', $branch_id)->get();
+
+        return view('designation._ajax_get_department', compact('departments'));
+    }
+
+
 }

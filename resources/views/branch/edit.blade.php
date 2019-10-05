@@ -16,6 +16,9 @@
 <body>
 
 <div class="container pt-5">
+
+    @include('partial.message')
+
     <form class="form-box" action="{{route('branch.update', $branch->id)}}" method="post" enctype="multipart/form-data">
         <h3 class="form-box success">Update Company</h3><br>
         @csrf

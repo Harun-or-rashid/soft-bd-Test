@@ -10,37 +10,37 @@
                 <a href="{{ route('branch.create') }}" class="btn btn-primary">Create</a>
                 <table class="table text-purple table-bordered table-hover">
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Department</th>
+                        <th>Branch Name</th>
                         <th>Company Name</th>
-                        <th>Location</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
-                    @foreach($branches as $branch)
+                    @foreach($designation as $designation)
 
                         <tr>
                             <td>
                                 <a style="text-decoration: none;font-size: 20px"
-                                   href="{{route('branch.show',$branch->id)}}">{{$branch->name}}</a>
+                                   href="{{route('designation.show',$designation->id)}}">{{$designation->title}}</a>
                             </td>
-                            <td>{{$branch->company->name}}</td>
-                            <td>{{$branch->location}}</td>
-                            <td>@if($branch->status == 1)
+                            <td>{{ $designation->department->name }}</td>
+                            <td>{{ $designation->department->branch->name }}</td>
+                            <td>{{ $designation->department->branch->company->name }}</td>
+                            <td>@if($designation->status == 1)
                                     <span class="text-success">Active</span>
                                 @else
                                     <span class="text-danger">Inactive</span>
                                 @endif</td>
                             <td>
-                                <a href="{{route('branch.show',$branch->id)}}" class="btn btn-xs btn-success"
+                                <a href="{{route('designation.show',$designation->id)}}" class="btn btn-xs btn-success"
                                    title="View"><i
                                             class="fa fa-eye"></i></a>
-                                <a href="{{route('branch.edit',$branch->id)}}" class="btn btn-xs btn-primary"
+                                <a href="{{route('designation.edit',$designation->id)}}" class="btn btn-xs btn-primary"
                                    title="Edit"><i
                                             class="fa fa-pencil-square"></i></a>
-                                <a href="{{route('branch.destroy',$branch->id)}}"
-                                   onclick="return confirm('Are you sure?')" class="btn btn-xs btn-danger" title="Edit"><i
+                                <a href="{{route('designation.destroy',$designation->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-xs btn-danger" title="Edit"><i
                                             class="fa fa-trash-o"></i></a>
-
                             </td>
                         </tr>
                     @endforeach

@@ -7,40 +7,42 @@
 
                 @include('partial.message')
 
-                <a href="{{ route('branch.create') }}" class="btn btn-primary">Create</a>
+                <a href="{{ route('employee.create') }}" class="btn btn-primary">Create</a>
                 <table class="table text-purple table-bordered table-hover">
                     <tr>
                         <th>Name</th>
+                        <th>Designation</th>
+                        <th>Department</th>
+                        <th>Branch Name</th>
                         <th>Company Name</th>
-                        <th>Location</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
-                    @foreach($branches as $branch)
+                    @foreach($employees as $employee)
 
                         <tr>
                             <td>
                                 <a style="text-decoration: none;font-size: 20px"
-                                   href="{{route('branch.show',$branch->id)}}">{{$branch->name}}</a>
+                                   href="{{route('employee.show',$employee->id)}}">{{$employee->name}}</a>
                             </td>
-                            <td>{{$branch->company->name}}</td>
-                            <td>{{$branch->location}}</td>
-                            <td>@if($branch->status == 1)
+                            <td>{{ $employee->designation->title }}</td>
+                            <td>{{ $employee->designation->department->name }}</td>
+                            <td>{{ $employee->designation->department->branch->name }}</td>
+                            <td>{{ $employee->designation->department->branch->company->name }}</td>
+                            <td>@if($employee->status == 1)
                                     <span class="text-success">Active</span>
                                 @else
                                     <span class="text-danger">Inactive</span>
                                 @endif</td>
                             <td>
-                                <a href="{{route('branch.show',$branch->id)}}" class="btn btn-xs btn-success"
+                                <a href="{{route('employee.show',$employee->id)}}" class="btn btn-xs btn-success"
                                    title="View"><i
                                             class="fa fa-eye"></i></a>
-                                <a href="{{route('branch.edit',$branch->id)}}" class="btn btn-xs btn-primary"
+                                <a href="{{route('employee.edit',$employee->id)}}" class="btn btn-xs btn-danger"
                                    title="Edit"><i
                                             class="fa fa-pencil-square"></i></a>
-                                <a href="{{route('branch.destroy',$branch->id)}}"
-                                   onclick="return confirm('Are you sure?')" class="btn btn-xs btn-danger" title="Edit"><i
+                                <a href="{{route('employee.destroy',$employee->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-xs btn-primary" title="Edit"><i
                                             class="fa fa-trash-o"></i></a>
-
                             </td>
                         </tr>
                     @endforeach
